@@ -1,6 +1,5 @@
-o conflito para dar o merde no pull do codex esta entre esses 2 arquivos python
-
 """ClipFusion — Prompt Builder para IA externa."""
+
 import json, re
 from viral_engine.archetypes import ARCHETYPES
 from core.transcriber import fmt_time
@@ -14,7 +13,6 @@ def _detect_lang(text: str) -> str:
     if en_score > pt_score:
         return "en"
     return "pt"
-
 
 def _coverage_sample(segments: list, buckets: int = 10) -> list:
     """
@@ -175,6 +173,7 @@ def parse_ai_response(text: str) -> list:
 ---------------
 """
 ClipFusion Viral Pro — Interface principal (Tkinter)
+
 7 abas: Projeto | Transcrição | IA Externa | Cortes | Render | Histórico | Agenda
 Lazy loading: viral_engine só importa quando usa (economiza ~300MB RAM idle)
 gc.collect() explícito após render (crucial para 8GB RAM)
