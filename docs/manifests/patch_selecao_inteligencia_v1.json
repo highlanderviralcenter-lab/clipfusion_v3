@@ -1,0 +1,52 @@
+{
+  "patch_name": "patch_selecao_inteligencia_v1",
+  "version": "1.0.0",
+  "description": "Valida o patch de transcrição, seleção em janelas e persistência de score.",
+  "target_repo_markers": [
+    "main.py",
+    "core",
+    "gui",
+    "viral_engine",
+    "anti_copy_modules"
+  ],
+  "files_changed": [
+    "core/transcriber.py",
+    "core/prompt_builder.py",
+    "db.py"
+  ],
+  "files_preserved": [
+    "anti_copy_modules/*",
+    "main.py",
+    "gui/*",
+    "core/cut_engine.py",
+    "install.sh",
+    "run.sh"
+  ],
+  "file_markers": {
+    "core/transcriber.py": [
+      "def _build_transcribe_kwargs",
+      "WhisperTranscriber"
+    ],
+    "core/prompt_builder.py": [
+      "def _build_windows",
+      "MAPA DE JANELAS PRIORITÁRIAS",
+      "v2_windows_rerank"
+    ],
+    "db.py": [
+      "selection_version",
+      "text_excerpt",
+      "_ensure_column"
+    ]
+  },
+  "db_required_columns": [
+    "local_score",
+    "viral_score",
+    "retention_score",
+    "shareability",
+    "commentability",
+    "niche",
+    "source_window",
+    "selection_version",
+    "text_excerpt"
+  ]
+}

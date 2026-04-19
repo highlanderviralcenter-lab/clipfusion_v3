@@ -1,0 +1,99 @@
+{
+  "timestamp": "2026-03-14T01:57:24-03:00",
+  "patch_name": "patch_selecao_inteligencia_v1",
+  "patch_version": "1.0.0",
+  "repo_path": "/home/highlander/clipfusion",
+  "status": "FAIL",
+  "checks": [
+    {
+      "name": "repo_root",
+      "ok": true,
+      "details": "/home/highlander/clipfusion"
+    },
+    {
+      "name": "file_exists:core/transcriber.py",
+      "ok": true,
+      "details": "core/transcriber.py"
+    },
+    {
+      "name": "file_exists:core/prompt_builder.py",
+      "ok": true,
+      "details": "core/prompt_builder.py"
+    },
+    {
+      "name": "file_exists:db.py",
+      "ok": true,
+      "details": "db.py"
+    },
+    {
+      "name": "markers:core/transcriber.py",
+      "ok": true,
+      "details": "ok"
+    },
+    {
+      "name": "markers:core/prompt_builder.py",
+      "ok": true,
+      "details": "ok"
+    },
+    {
+      "name": "markers:db.py",
+      "ok": true,
+      "details": "ok"
+    },
+    {
+      "name": "python_syntax",
+      "ok": true,
+      "details": "ok"
+    },
+    {
+      "name": "smoke_prompt_builder",
+      "ok": false,
+      "details": "ModuleNotFoundError(\"No module named 'core'\")"
+    },
+    {
+      "name": "db_schema",
+      "ok": true,
+      "details": "ok"
+    },
+    {
+      "name": "protected_paths",
+      "ok": true,
+      "details": "anti_copy_modules arquivos=16"
+    }
+  ],
+  "notes": [],
+  "files_changed": [
+    "core/transcriber.py",
+    "core/prompt_builder.py",
+    "db.py"
+  ],
+  "files_preserved": [
+    "anti_copy_modules/*",
+    "main.py",
+    "gui/*",
+    "core/cut_engine.py",
+    "install.sh",
+    "run.sh"
+  ],
+  "hashes": {
+    "core/transcriber.py": "c755f2dba397a9eb14d968d21a454597a4a1ce6d50529965da8496ebaf7b82d3",
+    "core/prompt_builder.py": "bba95bdfc25ebc0dc7f1e032f5268681c0ddc04eced2a3948d7e203100267b26",
+    "db.py": "b08152924aea5cd01bd8c2cf7bfb40d36e67351980528447a9ebea1bb7fb87d0",
+    "anti_copy_modules/ai_evasion.py": "3594dbbc1b6385d95b8a8c69b60095dddb8a583c424470de9fbd51faa7d4e498",
+    "anti_copy_modules/audio_advanced.py": "d8c1b9acc0a41cc60bf920bd293889104e15df3611acc6eeed670d7bb9f5376f",
+    "anti_copy_modules/core.py": "d682ac3f4512e994bca24d0ab5cac42507c238095e9f333d1dfd862bafc6445e",
+    "anti_copy_modules/fingerprint_evasion.py": "6da26037083fa9ba8d17c374eb013610a50c84a05757a24bcae89f454c1f57f2",
+    "anti_copy_modules/geometric_transforms.py": "f308d38952025498d2eed9a21d98bf7d9f1211132d107ec4df83447656c68cad",
+    "anti_copy_modules/network_evasion.py": "83d1f09c0c67493749007ab5c11e61fed4138c326c428c1db06a89a084b7db87",
+    "anti_copy_modules/temporal_obfuscation.py": "88eb7ec362626389f5e5d9dde2fb2d2dc9fd37b9cb469b344b1741be83ce40be",
+    "anti_copy_modules/__init__.py": "c275570e76e3187ea1a231cfdbfcccdc32f96e4573792eb9545d5cd33ae9f0d6",
+    "anti_copy_modules/__pycache__/__init__.cpython-311.pyc": "32567df043782f298bbed27240c852df3d528cf6de2afb9801628d56359e9303",
+    "anti_copy_modules/__pycache__/ai_evasion.cpython-311.pyc": "100cdaa526ac06c228e26631d26b796294d229911e77ba1cb15b94aaf39e3183",
+    "anti_copy_modules/__pycache__/audio_advanced.cpython-311.pyc": "d3c2441886c1e9bdfed9f23255806af0461664d62927a415f121cc7de9ea7439",
+    "anti_copy_modules/__pycache__/core.cpython-311.pyc": "6f07b17135d113ef2f1ceb48cc54b4f1befd5f2c6142b8aa07a835cf859c0eab",
+    "anti_copy_modules/__pycache__/fingerprint_evasion.cpython-311.pyc": "bafda0daec87d0fc3a6947bf94adf0bf523c375c5c7798f9c55e46915a5dd8e2",
+    "anti_copy_modules/__pycache__/geometric_transforms.cpython-311.pyc": "7f3c867a2bd23c295291f24d5f043e8fe8458e4195972ffed654319fbca112f7",
+    "anti_copy_modules/__pycache__/network_evasion.cpython-311.pyc": "d44c4d16e432a00b42b9413482385c1d5a8f7a75d8b4daabb062319f7bc247a6",
+    "anti_copy_modules/__pycache__/temporal_obfuscation.cpython-311.pyc": "d76d416167e01e242295c530ec09b2d51f2ed5820c54b4a59d7cc5b09fa08a87"
+  }
+}

@@ -1,0 +1,26 @@
+hardware:
+  encoder_preferido: "auto"
+  max_ram_gb: 6
+  usar_gpu_intel: true
+
+whisper:
+  modelo: "tiny"
+  idioma: "pt"
+  dispositivo: "cpu"
+
+render:
+  preset: "fast"
+  crf: 23
+  usar_vaapi: true
+
+anti_copy:
+  nivel: "basic"
+
+gui:
+  tema_escuro: true
+  janela_inicio: "1120x800"
+
+platforms:
+  - tiktok
+  - reels
+  - shorts

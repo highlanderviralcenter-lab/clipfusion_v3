@@ -1,0 +1,24 @@
+tiktok:
+  name: "TikTok"
+  orientation: "vertical"
+  resolution: [1080, 1920]
+  max_duration: 180
+  ideal_duration: [30, 60]
+  hook_seconds: 2
+  cta_style: "comentário"
+reels:
+  name: "Instagram Reels"
+  orientation: "vertical"
+  resolution: [1080, 1920]
+  max_duration: 90
+  ideal_duration: [15, 60]
+  hook_seconds: 1.5
+  cta_style: "compartilhar"
+shorts:
+  name: "YouTube Shorts"
+  orientation: "vertical"
+  resolution: [1080, 1920]
+  max_duration: 60
+  ideal_duration: [15, 60]
+  hook_seconds: 2.5
+  cta_style: "inscreva-se"

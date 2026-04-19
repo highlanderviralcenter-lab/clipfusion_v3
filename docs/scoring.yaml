@@ -1,0 +1,19 @@
+hook:
+  keywords:
+    - "segredo"
+    - "descobri"
+    - "nunca"
+    - "jamais"
+    - "incrível"
+    - "chocante"
+    - "pergunta"
+  weights:
+    presence: 0.4
+    position: 0.3
+    intensity: 0.3
+retention:
+  keywords: ["mas", "porém", "então", "e", "quando", "porque", "assim"]
+moment:
+  keywords: ["descobri", "repentinamente", "de repente", "incrivelmente", "nunca", "sempre"]
+shareability:
+  keywords: ["incrível", "chocante", "imperdível", "urgente", "revolta", "ameaça"]

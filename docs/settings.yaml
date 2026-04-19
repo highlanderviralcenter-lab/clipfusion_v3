@@ -1,0 +1,57 @@
+project:
+  workspace_root: "./workspace/projects"
+
+transcription:
+  model: "base"
+  language: "pt"
+  beam_size: 5
+  best_of: 5
+  temperature: 0.0
+  compression_ratio_threshold: 2.4
+  logprob_threshold: -1.0
+  no_speech_threshold: 0.6
+  condition_on_previous_text: true
+
+segmentation:
+  min_duration: 18
+  max_duration: 35
+  pause_threshold: 0.5
+
+scoring:
+  weights:
+    hook: 0.3
+    retention: 0.25
+    moment: 0.2
+    shareability: 0.15
+    platform_fit: 0.1
+  thresholds:
+    approved: 9.0
+    rework: 7.0
+    discard: 0.0
+
+platforms:
+  tiktok:
+    hook_ideal: 2
+    max_duration: 180
+    fit_weights:
+      discovery: 0.6
+      impact: 0.4
+  reels:
+    hook_ideal: 1.5
+    max_duration: 90
+    fit_weights:
+      rhythm: 0.5
+      visual: 0.5
+  shorts:
+    hook_ideal: 2.5
+    max_duration: 60
+    fit_weights:
+      arc: 0.7
+      payoff: 0.3
+
+protection:
+  levels:
+    none: []
+    basic: ["zoom", "color", "metadata", "audio"]
+    anti_ia: ["basic", "noise", "chroma"]
+    maximum: ["anti_ia", "flip", "jitter"]

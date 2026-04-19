@@ -1,0 +1,7 @@
+# Configurações padrão para o ClipFusion V3
+segment:
+  min_sec: 18
+  max_sec: 35
+transcription:
+  model_size: base
+  language: pt

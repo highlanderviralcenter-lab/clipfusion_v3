@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Score",
+  "type": "object",
+  "properties": {
+    "hook_strength": {"type": "number"},
+    "retention_score": {"type": "number"},
+    "moment_strength": {"type": "number"},
+    "shareability": {"type": "number"},
+    "combined_score": {"type": "number"}
+  },
+  "required": ["combined_score"]
+}

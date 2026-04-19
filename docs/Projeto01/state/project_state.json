@@ -1,0 +1,20 @@
+{
+  "project_id": 56,
+  "project_name": "Projeto 15/03 04:43",
+  "video_path": "/home/highlander/clipfusion/Projeto01/source/video_original.mp4",
+  "project_root": "/home/highlander/clipfusion/Projeto01",
+  "source_dir": "/home/highlander/clipfusion/Projeto01/source",
+  "work_dir": "/home/highlander/clipfusion/Projeto01/work",
+  "output_dir": "/home/highlander/clipfusion/Projeto01/output",
+  "state_dir": "/home/highlander/clipfusion/Projeto01/state",
+  "duration": 0.0,
+  "segments_count": 0,
+  "whisper_model": "base",
+  "language": "en",
+  "anti_copy": "maximum",
+  "use_vaapi": true,
+  "updated_at": "2026-03-15T04:46:32.803038",
+  "stage": "transcription_error",
+  "status": "error",
+  "error": "[enforce fail at alloc_cpu.cpp:127] err == 0. DefaultCPUAllocator: can't allocate memory: you tried to allocate 1607130072 bytes. Error code 12 (Cannot allocate memory)"
+}

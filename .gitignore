@@ -1,0 +1,27 @@
+# Ambientes Virtuais e Cache
+venv/
+__pycache__/
+*.pyc
+
+# Banco de Dados (Segurança e Performance)
+*.db
+clipfusion.db
+highcenter_clipfusion.db
+
+# Pastas de Saída (Arquivos pesados de vídeo)
+output/
+work/
+
+# Ruído/Lixo Digital detectado na raiz
+gc/
+os/
+json/
+random/
+subprocess/
+sys/
+tempfile/
+threading/
+tk/
+
+# Logs de erro
+*.log

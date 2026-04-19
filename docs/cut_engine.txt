@@ -1,0 +1,381 @@
+"""
+Core — Cut Engine com render 2-pass otimizado para Intel HD 520 tal do pobre se vira
+CORREÇÕES: threads=2, -sei 0, timeout extendido, fallback automático
+"""
+import subprocess, os, tempfile, shutil, threading, time
+from core.transcriber import fmt_time
+
+PLATFORM_CONFIGS = {
+    "tiktok": {"w": 1080, "h": 1920, "max_dur": 180, "crf": 23,
+               "preset": "fast", "fps": 30, "abr": "128k", "suffix": "_tiktok",
+               "vaapi_profile": "main", "vaapi_level": "4.0"},
+    "reels": {"w": 1080, "h": 1920, "max_dur": 90, "crf": 23,
+              "preset": "fast", "fps": 30, "abr": "128k", "suffix": "_reels",
+              "vaapi_profile": "main", "vaapi_level": "4.0"},
+    "shorts": {"w": 1080, "h": 1920, "max_dur": 60, "crf": 23,
+               "preset": "fast", "fps": 30, "abr": "128k", "suffix": "_shorts",
+               "vaapi_profile": "main", "vaapi_level": "4.0"},
+}
+
+def _ms(s: float) -> str:
+    h, rem = divmod(s, 3600)
+    m, sec = divmod(rem, 60)
+    return f"{int(h):02d}:{int(m):02d}:{int(sec):02d},{int((s%1)*1000):03d}"
+
+def build_srt(segments: list, cut_start: float, cut_end: float) -> str:
+    lines, idx = [], 1
+    for seg in segments:
+        if seg["end"] < cut_start or seg["start"] > cut_end:
+            continue
+        rs = max(seg["start"] - cut_start, 0)
+        re_ = min(seg["end"] - cut_start, cut_end - cut_start)
+        if re_ <= rs: continue
+        lines += [str(idx), f"{_ms(rs)} --> {_ms(re_)}", seg["text"].strip(), ""]
+        idx += 1
+    return "\n".join(lines)
+
+def _detect_vaapi() -> dict:
+    try:
+        r = subprocess.run(["vainfo"], capture_output=True, text=True, timeout=10)
+        has_encode = "VAEntrypointEncSlice" in r.stdout
+        driver = "iHD" if "iHD" in r.stdout else "i965" if "i965" in r.stdout else "none"
+        
+        # FIX: Para Skylake/HD 520, prefira i965 se disponível (mais estável)
+        if driver == "iHD" and "Skylake" in r.stdout or "HD Graphics 520" in r.stdout:
+            # Verifica se i965 está disponível como alternativa
+            try:
+                env_fallback = os.environ.copy()
+                env_fallback["LIBVA_DRIVER_NAME"] = "i965"
+                r2 = subprocess.run(["vainfo"], capture_output=True, text=True, 
+                                   timeout=10, env=env_fallback)
+                if "VAEntrypointEncSlice" in r2.stdout:
+                    driver = "i965_recommended"
+            except: pass
+        
+        return {
+            'disponivel': has_encode,
+            'driver': driver,
+            'encode_h264': has_encode,
+            'skylake_stable': driver == "i965_recommended"
+        }
+    except FileNotFoundError:
+        return {'disponivel': False, 'driver': 'none', 'encode_h264': False, 'skylake_stable': False}
+
+def _run_ffmpeg_safe(cmd: list, timeout: int = 600, env: dict = None, 
+                     progress_cb=None, description: str = "") -> tuple:
+    """
+    Executa FFmpeg com proteções contra GPU hang.
+    Retorna: (success: bool, stdout, stderr, returncode)
+    """
+    def log(m):
+        if progress_cb: progress_cb(m)
+    
+    full_env = os.environ.copy()
+    if env:
+        full_env.update(env)
+    
+    # FIX: Variáveis de ambiente anti-hang para Intel HD 520
+    full_env["LIBVA_DRIVER_NAME"] = full_env.get("LIBVA_DRIVER_NAME", "i965")  # Usa driver estável PICA
+    full_env["MESA_LOADER_DRIVER_OVERRIDE"] = "i965"  # Evitar Iris causa hangs [^25^]
+    full_env["LIBVA_DRI3_DISABLE"] = "1"  #  DRI3 fazendo bagunca [^27^]
+    
+    try:
+        log(f"   FFmpeg: {description[:50]}...")
+        
+        process = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            env=full_env
+        )
+        
+        # Timeout dinâmico: se travar por 120s no mesmo frame, mata
+        start_time = time.time()
+        last_output = time.time()
+        stdout_lines = []
+        stderr_lines = []
+        
+        while True:
+            ret = process.poll()
+            if ret is not None:
+                break
+            
+            # Verifica timeout de inatividade (GPU hang detectado)
+            if time.time() - last_output > 120:  # 2 minutos sem saída = hang
+                log("   Detectado possível GPU hang (timeout 120s)")
+                process.terminate()
+                time.sleep(2)
+                if process.poll() is None:
+                    process.kill()
+                return False, "", "GPU hang detectado - timeout de inatividade", -9
+            
+            # Lê saída que passa reto
+            import select
+            ready, _, _ = select.select([process.stderr], [], [], 1.0)
+            if ready:
+                line = process.stderr.readline()
+                if line:
+                    stderr_lines.append(line)
+                    last_output = time.time()
+                    # Detecta frame específico de hang
+                    if "frame=  360" in line or "frame=  361" in line:
+                        log(f"   Atenção: frame crítico 360 detectado")
+            
+            # Timeout global
+            if time.time() - start_time > timeout:
+                log(f"   Timeout global ({timeout}s) atingido")
+                process.kill()
+                return False, "", f"Timeout após {timeout}s", -9
+        
+        stdout, stderr = process.communicate(timeout=10)
+        stdout_lines.append(stdout)
+        stderr_lines.append(stderr)
+        
+        success = process.returncode == 0
+        full_stderr = "\n".join(stderr_lines)
+        
+        if not success and "GPU hang" in full_stderr:
+            log("   GPU hang confirmado no stderr")
+            return False, "", full_stderr, process.returncode
+            
+        return success, "", full_stderr, process.returncode
+        
+    except subprocess.TimeoutExpired:
+        process.kill()
+        return False, "", "TimeoutExpired", -9
+    except Exception as e:
+        return False, "", str(e), -1
+
+def render_cut(video_path: str, cut: dict, segments: list,
+               output_dir: str, project_id: str,
+               ace_level: str = "basic", use_vaapi: bool = True,
+               progress_cb=None) -> dict:
+    def log(m):
+        if progress_cb: progress_cb(m)
+
+    start = cut.get("start", cut.get("start_time", 0))
+    end = cut.get("end", cut.get("end_time", 0))
+    duration = end - start
+    idx = cut.get("cut_index", 0)
+    platforms = cut.get("platforms", ["tiktok", "reels", "shorts"])
+    safe_title = "".join(
+        c for c in cut.get("title", f"corte_{idx}")
+        if c.isalnum() or c in " _-"
+    ).strip().replace(" ", "_")[:40]
+
+    # FIX: Detecta VA-API com configuração para Skylake
+    vaapi_info = _detect_vaapi()
+    vaapi_ok = use_vaapi and vaapi_info['disponivel']
+    
+    if use_vaapi and not vaapi_ok:
+        log(" VA-API indisponível — usando libx264 (CPU)")
+    
+    # FIX: Se detectamos que i965 é mais estável, força ele
+    env_override = {}
+    if vaapi_info.get('skylake_stable'):
+        env_override["LIBVA_DRIVER_NAME"] = "i965"
+        log(" Usando driver i965 (estável para Skylake) em vez de iHD")
+
+    tmp = tempfile.mkdtemp()
+    output_paths = {}
+
+    try:
+        srt_content = build_srt(segments, start, end)
+        srt_path = os.path.join(tmp, "sub.srt")
+        with open(srt_path, "w", encoding="utf-8") as f:
+            f.write(srt_content)
+
+        style = ("FontName=Arial,FontSize=22,PrimaryColour=&H00FFFFFF,"
+                 "OutlineColour=&H00000000,Bold=1,Outline=2,Shadow=1,"
+                 "Alignment=2,MarginV=60")
+
+        for platform in platforms:
+            cfg = PLATFORM_CONFIGS.get(platform)
+            if not cfg: continue
+            dur = min(duration, cfg["max_dur"])
+            w, h = cfg["w"], cfg["h"]
+            out_name = f"{safe_title}{cfg['suffix']}.mp4"
+            out_path = os.path.join(output_dir, platform, out_name)
+            os.makedirs(os.path.dirname(out_path), exist_ok=True)
+            log(f" [{platform}] {out_name} ({fmt_time(dur)})")
+
+            raw_out = os.path.join(tmp, f"raw_{platform}.mp4")
+            ok = False
+
+            if vaapi_ok:
+                # PASSO 1: Corte + escala via VA-API (CORREÇÕES para HD 520)
+                # FIX: -threads 2 limita paralelismo que causa overflow [^30^]
+                # FIX: -sei 0 evita freezes em frames específicos [^22^]
+                # FIX: -async_depth 1 reduz bufferização
+                cmd = [
+                    "ffmpeg", "-y",
+                    "-threads", "2",  # LIMITAÇÃO CRÍTICA para 8GB RAM + HD 520
+                    "-hwaccel", "vaapi",
+                    "-hwaccel_device", "/dev/dri/renderD128",
+                    "-hwaccel_output_format", "vaapi",
+                    "-async_depth", "1",  # Reduz profundidade de buffer
+                    "-ss", str(start), 
+                    "-i", video_path, 
+                    "-t", str(dur),
+                    "-vf", f"scale_vaapi={w}:{h}:mode=fast",  # mode=fast reduz carga
+                    "-c:v", "h264_vaapi",
+                    "-profile", cfg["vaapi_profile"],
+                    "-level", cfg["vaapi_level"],
+                    "-sei", "0",  # CRÍTICO: evita freeze no frame 360 [^22^]
+                    "-c:a", "aac", 
+                    "-b:a", cfg["abr"], 
+                    "-ar", "44100",
+                    "-r", str(cfg["fps"]), 
+                    "-movflags", "+faststart",
+                    "-map_metadata", "-1", 
+                    raw_out,
+                ]
+                
+                success, _, stderr, retcode = _run_ffmpeg_safe(
+                    cmd, timeout=300, env=env_override,
+                    progress_cb=progress_cb,
+                    description=f"VA-API pass 1 {platform}"
+                )
+                ok = success
+
+                if not ok and "GPU hang" in stderr:
+                    log(f"   GPU hang detectado, tentando fallback...")
+                    vaapi_ok = False  # Força fallback dobro e vem a proxima
+
+            if ok and srt_content.strip():
+                # PASSO 2: Burn legenda em software (arquivo pequeno = rápido)
+                sub2 = os.path.join(tmp, f"sub_{platform}.mp4")
+                srt_esc = srt_path.replace("\\", "/").replace(":", "\\:")
+                
+                # FIX: threads=2 também no passo 2
+                cmd2 = [
+                    "ffmpeg", "-y", 
+                    "-threads", "2",
+                    "-i", raw_out,
+                    "-vf", f"subtitles='{srt_esc}':force_style='{style}'",
+                    "-c:v", "libx264", 
+                    "-preset", cfg["preset"], 
+                    "-crf", str(cfg["crf"]),
+                    "-c:a", "copy", 
+                    "-r", str(cfg["fps"]), 
+                    "-pix_fmt", "yuv420p",
+                    sub2,
+                ]
+                
+                success2, _, stderr2, _ = _run_ffmpeg_safe(
+                    cmd2, timeout=180,
+                    progress_cb=progress_cb,
+                    description=f"Legendas {platform}"
+                )
+                
+                if success2:
+                    raw_out = sub2
+                else:
+                    log(f"  Falha na legenda, continuando sem...")
+
+            if not ok:
+                # FALLBACK: tudo em software (1 passo) - MAIS ESTÁVEL
+                log(f"   Fallback para libx264 (CPU) - mais estável para HD 520")
+                scale = (f"scale={w}:{h}:force_original_aspect_ratio=decrease,"
+                        f"pad={w}:{h}:(ow-iw)/2:(oh-ih)/2:black")
+                if srt_content.strip():
+                    srt_esc = srt_path.replace("\\", "/").replace(":", "\\:")
+                    vf = f"{scale},subtitles='{srt_esc}':force_style='{style}'"
+                else:
+                    vf = scale
+                
+                # FIX: E o que tem, 8GB RAM 
+                cmd = [
+                    "ffmpeg", "-y",
+                    "-threads", "2",  # Limita threads
+                    "-ss", str(start), 
+                    "-i", video_path, 
+                    "-t", str(dur),
+                    "-vf", vf,
+                    "-c:v", "libx264", 
+                    "-preset", cfg["preset"], 
+                    "-crf", str(cfg["crf"]),
+                    "-c:a", "aac", 
+                    "-b:a", cfg["abr"], 
+                    "-ar", "44100",
+                    "-r", str(cfg["fps"]), 
+                    "-pix_fmt", "yuv420p",
+                    "-movflags", "+faststart", 
+                    "-map_metadata", "-1", 
+                    "-max_muxing_queue_size", "1024",  # Limita buffer
+                    raw_out,
+                ]
+                
+                success, _, stderr, _ = _run_ffmpeg_safe(
+                    cmd, timeout=600,
+                    progress_cb=progress_cb,
+                    description=f"CPU fallback {platform}"
+                )
+                
+                if not success:
+                    log(f" Render falhou: {stderr[-150:]}")
+                    continue
+
+            # Anti-copyright (PRESERVADO: 4 níveis funcionando)
+            if ace_level != "none":
+                from anti_copy_modules.core import (
+                    AntiCopyrightEngine, ProtectionConfig, ProtectionLevel)
+                lvl = ProtectionLevel(ace_level)
+                engine = AntiCopyrightEngine(project_id, idx,
+                                            ProtectionConfig.from_level(lvl), log=log)
+                engine.process(raw_out, out_path)
+            else:
+                shutil.copy2(raw_out, out_path)
+
+            size = os.path.getsize(out_path) / (1024 * 1024)
+            log(f" {platform}: {size:.1f} MB")
+            output_paths[platform] = out_path
+
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+    return output_paths
+
+def render_all(video_path: str, cuts: list, segments: list,
+               output_dir: str, project_id: str,
+               ace_level: str = "basic", use_vaapi: bool = True,
+               progress_cb=None) -> dict:
+    import gc
+    results = {}
+    
+    # FIX: Warm-up da GPU para evitar hang no primeiro corte
+    if use_vaapi and _detect_vaapi()['disponivel']:
+        if progress_cb:
+            progress_cb(" Warm-up VA-API (evita hang inicial)...")
+        try:
+            # Renderiza 1 segundo de vídeo preto para "aquecer" a GPU
+            warmup_cmd = [
+                "ffmpeg", "-y",
+                "-f", "lavfi", "-i", "color=c=black:s=320x240:d=1",
+                "-c:v", "h264_vaapi",
+                "-f", "null", "-"
+            ]
+            subprocess.run(warmup_cmd, capture_output=True, timeout=30,
+                          env={"LIBVA_DRIVER_NAME": "i965", "MESA_LOADER_DRIVER_OVERRIDE": "i965"})
+        except: pass
+    
+    for i, cut in enumerate(cuts):
+        if progress_cb:
+            progress_cb(f"\n[{i+1}/{len(cuts)}] {cut.get('title','Corte')}")
+        
+        # FIX: Pausa pra cuspir
+        if i > 0:
+            time.sleep(2)  # 2 segundos de pausa entre cortes
+        
+        paths = render_cut(video_path, cut, segments, output_dir,
+                          project_id, ace_level, use_vaapi, progress_cb)
+        results[cut.get("id", cut.get("cut_index", i))] = paths
+        
+        # GC explícito entre cortes (8GB RAM) - JÁ EXISTENTE, MANTIDO
+        gc.collect()
+        
+        # FIX: Pausa adicional após GC para estabilidade
+        time.sleep(1)
+    
+    return results

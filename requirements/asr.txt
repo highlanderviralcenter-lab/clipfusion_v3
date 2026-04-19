@@ -1,0 +1,2 @@
+faster-whisper>=0.10
+whisper @ git+https://github.com/openai/whisper.git

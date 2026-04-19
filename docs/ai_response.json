@@ -1,0 +1,88 @@
+{
+  "cortes": [
+    {
+      "titulo": "Eu destruo você sem te ofender — e você não consegue responder",
+      "start": 4050.0,
+      "end": 4102.0,
+      "archetype": "03_confronto",
+      "hook": "Declaração de superioridade intelectual disfarçada de humildade — 'não estou tentando ofender ninguém'",
+      "reason": "Revela a lógica fria por trás do ataque cômico perfeito: usar palavras que o alvo não entende para que ele não possa se defender. Gatilho de admiração + raiva que gera compartilhamento compulsivo.",
+      "platforms": ["tiktok", "reels", "shorts"],
+      "metadata": {
+        "titulo_post": "A estratégia mais cruel do stand-up que ninguém te conta",
+        "descricao": "Ele não precisa te ofender pra te destruir. Ele escolhe as palavras certas pra que você não saiba nem como responder. Isso é inteligência ou crueldade? As duas coisas.",
+        "hashtags": ["#standup", "#comedia", "#inteligencia", "#viralvideo", "#podcast"]
+      }
+    },
+    {
+      "titulo": "Escrevi 19 horas de material novo — eles não conseguem acompanhar",
+      "start": 2834.0,
+      "end": 2873.0,
+      "archetype": "09_impacto",
+      "hook": "Número chocante jogado de forma casual: '19 vezes' — o cérebro para pra processar a escala",
+      "reason": "A ideia de forçar concorrentes a desistirem pela produção, não pela briga, é contraintuitiva e poderosa. Gera admiração imediata e debate nos comentários sobre o que é genialidade vs obsessão.",
+      "platforms": ["tiktok", "reels", "shorts"],
+      "metadata": {
+        "titulo_post": "A estratégia silenciosa que eliminou comediantes sem uma briga",
+        "descricao": "Enquanto outros repetiam o mesmo show por 10 anos, ele escrevia material novo até eles desistirem. 19 horas de conteúdo original. Isso não é talento — é guerra.",
+        "hashtags": ["#comedia", "#georgecarlin", "#standup", "#criatividade", "#podcast"]
+      }
+    },
+    {
+      "titulo": "Descobri que era engraçado há só 10 anos",
+      "start": 3479.0,
+      "end": 3534.0,
+      "archetype": "05_revelacao",
+      "hook": "Resposta completamente inesperada: comediante famoso diz que só descobriu o dom adulto",
+      "reason": "Quebra o mito do 'sempre fui o palhaço da turma'. A revelação tardia humaniza e gera identificação com quem acha que perdeu o momento. Alto potencial de save e compartilhamento.",
+      "platforms": ["tiktok", "reels"],
+      "metadata": {
+        "titulo_post": "Ele é um dos maiores comediantes — e só descobriu isso aos 30 e tantos",
+        "descricao": "Nunca foi do coral, não foi ao baile, não fez teatro na escola. A descoberta veio tarde. E mesmo assim chegou ao topo. Isso muda alguma coisa pra você?",
+        "hashtags": ["#comedia", "#descoberta", "#standup", "#inspiracao", "#podcast"]
+      }
+    },
+    {
+      "titulo": "Ele colocou uma cláusula de vestido no contrato — e eu assinei",
+      "start": 541.0,
+      "end": 592.0,
+      "archetype": "03_confronto",
+      "hook": "Revelação absurda: cláusula de vestido em contrato de ator — o espectador não acredita",
+      "reason": "Combina escândalo de Hollywood com acusação de plágio e mentira pública. A sequência de revelações mantém o ritmo acelerado e força o replay. Comentários inevitáveis.",
+      "platforms": ["tiktok", "reels", "shorts"],
+      "metadata": {
+        "titulo_post": "O contrato tinha uma cláusula que ele nunca deveria ter aceitado",
+        "descricao": "Uma cláusula de vestido. Um papel roubado. Uma mentira gravada em TV em 2018. E ele ainda veio a público negar. Esse é Hollywood que eles não mostram.",
+        "hashtags": ["#hollywood", "#drama", "#contrato", "#bastidores", "#podcast"]
+      }
+    },
+    {
+      "titulo": "Tyler Perry não coloca ninguém pra cima — e todo mundo sabe",
+      "start": 8490.0,
+      "end": 8520.0,
+      "archetype": "06_justo_engolido",
+      "hook": "Acusação direta e nominada contra figura poderosa — sem rodeios, sem suavização",
+      "reason": "Critica gatekeeping dentro da própria comunidade usando lógica irrefutável. Tema explosivo que já divide opiniões publicamente — o corte entra numa conversa que já existe e a acelera.",
+      "platforms": ["tiktok", "reels"],
+      "metadata": {
+        "titulo_post": "Se você guarda o portão, não reclame quando te chamam de guardião",
+        "descricao": "As pessoas das produções dele não ficam famosas. Você passa por elas sem segurança. Se você tem poder e não coloca os seus pra cima, não estranha o que falam de você.",
+        "hashtags": ["#tylerperry", "#industria", "#gatekeeping", "#entretenimento", "#podcast"]
+      }
+    },
+    {
+      "titulo": "Comediante explica por que não consegue dormir depois do show",
+      "start": 8460.0,
+      "end": 8522.0,
+      "archetype": "05_revelacao",
+      "hook": "Contradição biológica: corpo bombando de endorfina às 2h da manhã e precisando dormir",
+      "reason": "Humaniza a vida dos bastidores com dado concreto e inesperado — a adrenalina do palco como inimiga do descanso. Gera empatia e curiosidade sobre o custo real da fama.",
+      "platforms": ["tiktok", "reels", "shorts"],
+      "metadata": {
+        "titulo_post": "O lado do stand-up que ninguém mostra: dormir é o maior desafio",
+        "descricao": "Seu dia de trabalho começa às 20h e termina à 1h da manhã com o corpo no limite da adrenalina. Aí você tenta dormir. 19 cidades, 100 shows. O preço não é o que você imagina.",
+        "hashtags": ["#bastidores", "#comedia", "#standup", "#saudemental", "#podcast"]
+      }
+    }
+  ]
+}

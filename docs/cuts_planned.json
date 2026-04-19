@@ -1,0 +1,165 @@
+[
+  {
+    "cut_index": 0,
+    "title": "Descobri que era engraçado há só 10 anos",
+    "start": 3479.0,
+    "end": 3534.0,
+    "archetype": "05_revelacao",
+    "hook": "Resposta completamente inesperada: comediante famoso diz que só descobriu o dom adulto",
+    "reason": "Quebra o mito do 'sempre fui o palhaço da turma'. A revelação tardia humaniza e gera identificação com quem acha que perdeu o momento. Alto potencial de save e compartilhamento.",
+    "platforms": [
+      "tiktok",
+      "reels"
+    ],
+    "metadata": {
+      "titulo_post": "Ele é um dos maiores comediantes — e só descobriu isso aos 30 e tantos",
+      "descricao": "Nunca foi do coral, não foi ao baile, não fez teatro na escola. A descoberta veio tarde. E mesmo assim chegou ao topo. Isso muda alguma coisa pra você?",
+      "hashtags": [
+        "#comedia",
+        "#descoberta",
+        "#standup",
+        "#inspiracao",
+        "#podcast"
+      ]
+    },
+    "text": "When did you know you were funny? Probably about 10 years ago. 10 years ago? Yeah, about 10 years. So you didn't think of a child. Because obviously, you said the bear structure background, your family was very religious. So obviously, you didn't get an opportunity. I never did a talent show. I was never in any extra curricular activities. I was never in drama. I was never in bank account. Never a boy's guy. I hate his dance school all the time. I would love to get for it because you dropped. You understand? You understand? So there was no, like, I don't, I don't tolerate high school games. I didn't go to high school. I don't know how most of the games they think I play. I'm not even aware of them. But, but can't for you to get on stage.",
+    "source_window": "W116",
+    "selection_version": "v2_windows_rerank",
+    "local_score": 43.2,
+    "viral_score": 50.5,
+    "retention_score": 0.0,
+    "shareability": 0.0,
+    "commentability": 0.0
+  },
+  {
+    "cut_index": 1,
+    "title": "Tyler Perry não coloca ninguém pra cima — e todo mundo sabe",
+    "start": 8490.0,
+    "end": 8520.0,
+    "archetype": "06_justo_engolido",
+    "hook": "Acusação direta e nominada contra figura poderosa — sem rodeios, sem suavização",
+    "reason": "Critica gatekeeping dentro da própria comunidade usando lógica irrefutável. Tema explosivo que já divide opiniões publicamente — o corte entra numa conversa que já existe e a acelera.",
+    "platforms": [
+      "tiktok",
+      "reels"
+    ],
+    "metadata": {
+      "titulo_post": "Se você guarda o portão, não reclame quando te chamam de guardião",
+      "descricao": "As pessoas das produções dele não ficam famosas. Você passa por elas sem segurança. Se você tem poder e não coloca os seus pra cima, não estranha o que falam de você.",
+      "hashtags": [
+        "#tylerperry",
+        "#industria",
+        "#gatekeeping",
+        "#entretenimento",
+        "#podcast"
+      ]
+    },
+    "text": "They're like, like we put too much pressure on Tyler Perry. You know what I mean? He ain't putting nobody on. The people that been in his productions, they're not famous all of them, could walk through them all without security. Being what you're going to be, but put your people on. If you were gay person and you in there, put some other gay people on. Put somebody on. Or don't be wondering why people keep saying gay keepers. Because clearly, y'all are keeping these gates. Clearly.",
+    "source_window": "W283",
+    "selection_version": "v2_windows_rerank",
+    "local_score": 42.6,
+    "viral_score": 54.0,
+    "retention_score": 0.0,
+    "shareability": 0.0,
+    "commentability": 0.0
+  },
+  {
+    "cut_index": 2,
+    "title": "Ele colocou uma cláusula de vestido no contrato — e eu assinei",
+    "start": 541.0,
+    "end": 592.0,
+    "archetype": "03_confronto",
+    "hook": "Revelação absurda: cláusula de vestido em contrato de ator — o espectador não acredita",
+    "reason": "Combina escândalo de Hollywood com acusação de plágio e mentira pública. A sequência de revelações mantém o ritmo acelerado e força o replay. Comentários inevitáveis.",
+    "platforms": [
+      "tiktok",
+      "reels",
+      "shorts"
+    ],
+    "metadata": {
+      "titulo_post": "O contrato tinha uma cláusula que ele nunca deveria ter aceitado",
+      "descricao": "Uma cláusula de vestido. Um papel roubado. Uma mentira gravada em TV em 2018. E ele ainda veio a público negar. Esse é Hollywood que eles não mostram.",
+      "hashtags": [
+        "#hollywood",
+        "#drama",
+        "#contrato",
+        "#bastidores",
+        "#podcast"
+      ]
+    },
+    "text": "Did he wear a dress in it? You bet he did. It's in my contract. Why would you put that in your Twitter's can? Your contract cat? That's where he's the unbelievable actor. Him and Tyler Perry can't play a man to say it a life. They play good women. And I believe that the best actor should be in the best role. So that's why because when we released that clip and he said that you responded because he said he was supposed to play money in you were supposed to play Santa Claus. Now right line. That he knows is a lie. So why would he say it? Because he's a liar. Nobody knows why liar's lie. And that's why I had to come on the program. Sedric did the same thing. Sedric told you when you asked him did you still cat Williams joke. He said it don't lie in up. How it don't lie in up that I did it on TV in 2018.",
+    "source_window": "W18",
+    "selection_version": "v2_windows_rerank",
+    "local_score": 41.2,
+    "viral_score": 50.5,
+    "retention_score": 0.0,
+    "shareability": 0.0,
+    "commentability": 0.0
+  },
+  {
+    "cut_index": 3,
+    "title": "Eu destruo você sem te ofender — e você não consegue responder",
+    "start": 4050.0,
+    "end": 4102.0,
+    "archetype": "03_confronto",
+    "hook": "Declaração de superioridade intelectual disfarçada de humildade — 'não estou tentando ofender ninguém'",
+    "reason": "Revela a lógica fria por trás do ataque cômico perfeito: usar palavras que o alvo não entende para que ele não possa se defender. Gatilho de admiração + raiva que gera compartilhamento compulsivo.",
+    "platforms": [
+      "tiktok",
+      "reels",
+      "shorts"
+    ],
+    "metadata": {
+      "titulo_post": "A estratégia mais cruel do stand-up que ninguém te conta",
+      "descricao": "Ele não precisa te ofender pra te destruir. Ele escolhe as palavras certas pra que você não saiba nem como responder. Isso é inteligência ou crueldade? As duas coisas.",
+      "hashtags": [
+        "#standup",
+        "#comedia",
+        "#inteligencia",
+        "#viralvideo",
+        "#podcast"
+      ]
+    },
+    "text": "What's her? They were talking about it. What part would have been different if she was a man? It would have just been more vicious. You did that that's my point. I took all the vicious and dynamo way because I didn't have any. Plus I understood. I'm not trying to offend black women with short hair. I'm not trying to offend heavy set women. I'm not trying to upset fellow comedians. I'm not trying to do any of that. And I can't. I am qualified to be able to do none of that and still eviscerate you because I'm smart enough to know that I need to say that you have narrowed fingers because I know you're limited education. Means you don't know what the word means. So you can't possibly respond to it. You're not sure of the meaning. And I'm going to continue hitting you because this is what comedians do.",
+    "source_window": "W135",
+    "selection_version": "v2_windows_rerank",
+    "local_score": 41.2,
+    "viral_score": 50.5,
+    "retention_score": 0.0,
+    "shareability": 0.0,
+    "commentability": 0.0
+  },
+  {
+    "cut_index": 4,
+    "title": "Escrevi 19 horas de material novo — eles não conseguem acompanhar",
+    "start": 2834.0,
+    "end": 2873.0,
+    "archetype": "09_impacto",
+    "hook": "Número chocante jogado de forma casual: '19 vezes' — o cérebro para pra processar a escala",
+    "reason": "A ideia de forçar concorrentes a desistirem pela produção, não pela briga, é contraintuitiva e poderosa. Gera admiração imediata e debate nos comentários sobre o que é genialidade vs obsessão.",
+    "platforms": [
+      "tiktok",
+      "reels",
+      "shorts"
+    ],
+    "metadata": {
+      "titulo_post": "A estratégia silenciosa que eliminou comediantes sem uma briga",
+      "descricao": "Enquanto outros repetiam o mesmo show por 10 anos, ele escrevia material novo até eles desistirem. 19 horas de conteúdo original. Isso não é talento — é guerra.",
+      "hashtags": [
+        "#comedia",
+        "#georgecarlin",
+        "#standup",
+        "#criatividade",
+        "#podcast"
+      ]
+    },
+    "text": "I didn't know that these people were making a great living at doing this. I thought this is just what they did. They tell jokes. They're funny people. But I loved the craft. And that's why when I got into the craft, I thought it was my obligation to make sure that I can't write new materials so much that it forced these comedians to stop doing the set. They've been doing for 10 years and keep writing some new stuff. And I knew that if I could get that to take on, that most of these bombs will have to just quit comedy. Because they can't keep up. They're not going to keep writing an hour or were from material. I've written an hour were from material 19 times. They're not going to do it.",
+    "source_window": "W94",
+    "selection_version": "v2_windows_rerank",
+    "local_score": 39.6,
+    "viral_score": 54.0,
+    "retention_score": 0.0,
+    "shareability": 0.0,
+    "commentability": 0.0
+  }
+]
